@@ -1,0 +1,39 @@
+﻿using AutoMapper;
+using ProjetoCarol.Application.DTO.Usuario;
+using ProjetoCarol.Application.Interfaces;
+using ProjetoCarol.Application.ViewModel.Usuario;
+using ProjetoCarol.Domain.Entities.Usuario;
+using ProjetoCarol.Domain.Interfaces;
+using ProjetoCarol.Domain.Interfaces.Usuario;
+using ProjetoCarol.Domain.Notifications;
+
+namespace ProjetoCarol.Application.Services;
+
+public class UsuarioPagamentoService : IUsuarioPagamentoService
+{
+    private readonly IUsuarioPagamentoRepository _repo;
+    private readonly IMapper _mapper;
+    private readonly IUnitOfWork _uow;
+
+    public UsuarioPagamentoService(IUsuarioPagamentoRepository repo, IMapper mapper, IUnitOfWork uow)
+    {
+        _repo = repo;
+        _mapper = mapper;
+        _uow = uow;
+    }
+
+    public async Task<DomainNotificationsResult<UsuarioPagamentoViewModel>> Criar(UsuarioPagamentoDTO dto)
+    {
+        var result = new DomainNotificationsResult<UsuarioPagamentoViewModel>();
+
+        var entity = _mapper.Map<UsuarioPagamento>(dto);
+
+        var createdEntity = await _repo.Criar(entity);
+
+        await _uow.Commit();
+
+        result.Result = _mapper.Map<UsuarioPagamentoViewModel>(createdEntity);
+
+        return result;
+    }
+}
