@@ -1,4 +1,5 @@
-﻿using ProjetoCarol.Domain.Entities.Usuario;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjetoCarol.Domain.Entities.Usuario;
 using ProjetoCarol.Domain.Interfaces.Usuario;
 using ProjetoCarol.Infrastructure.Context;
 
@@ -16,6 +17,13 @@ public class UsuarioPagamentoRepository : IUsuarioPagamentoRepository
     public async Task<UsuarioPagamento> Criar(UsuarioPagamento pagamento)
     {
         _context.UsuarioPagamento.Add(pagamento);
+
+        return pagamento;
+    }
+
+    public async Task<UsuarioPagamento> EncontrarPeloId(Guid? id)
+    {
+        var pagamento = await _context.UsuarioPagamento.Where(x => x.Id == id).FirstOrDefaultAsync();
 
         return pagamento;
     }

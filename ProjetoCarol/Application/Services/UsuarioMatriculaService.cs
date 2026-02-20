@@ -29,7 +29,7 @@ public class UsuarioMatriculaService : IUsuarioMatriculaService
         if (!usuarioExiste)
             throw new Exception("Usuário não encontrado.");
 
-        var usuarioJaMatriculado = await _context.UsuarioMatricula.Where(x => x.UsuarioId == dto.UsuarioId && x.Idioma == dto.Idioma).SingleAsync();
+        var usuarioJaMatriculado = await _context.UsuarioMatricula.Where(x => x.UsuarioId == dto.UsuarioId && x.Idioma == dto.Idioma).FirstOrDefaultAsync();
 
         if(usuarioJaMatriculado != null)
         {
@@ -54,6 +54,25 @@ public class UsuarioMatriculaService : IUsuarioMatriculaService
     {
         var result = new DomainNotificationsResult<IEnumerable<UsuarioMatriculaViewModel>>();
         var matriculas = await _context.UsuarioMatricula
+            .Include(x => x.Usuario)
+            .Select(m => new UsuarioMatriculaViewModel
+            {
+                MatriculaId = m.Id,
+                UsuarioId = m.UsuarioId,
+                NomeCompleto = m.Usuario.NomeCompleto,
+                Idioma = m.Idioma,
+                DataMatricula = m.DataMatricula
+            })
+            .ToListAsync();
+        result.Result = matriculas;
+        return result;
+    }
+
+    public async Task<DomainNotificationsResult<IEnumerable<UsuarioMatriculaViewModel>>> ListarPorUsuario(Guid usuarioId)
+    {
+        var result = new DomainNotificationsResult<IEnumerable<UsuarioMatriculaViewModel>>();
+        var matriculas = await _context.UsuarioMatricula
+            .Where(x => x.UsuarioId == usuarioId)
             .Include(x => x.Usuario)
             .Select(m => new UsuarioMatriculaViewModel
             {

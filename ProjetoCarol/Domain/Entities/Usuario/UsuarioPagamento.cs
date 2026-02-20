@@ -24,4 +24,9 @@ public class UsuarioPagamento
         ValorPago = valorPago;
         DataPagamento = dataPagamento;
     }
+
+    public void AlterarStatus(StatusPagamento status)
+    {
+        this.Status = status;
+    }
 }

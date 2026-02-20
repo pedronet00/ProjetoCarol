@@ -129,6 +129,7 @@ public class UsuarioService : IUsuarioService
                         DataPagamento = p.DataPagamento,
                         Status = p.Status
                     })
+                    .OrderByDescending(x => x.DataPagamento)
                     .ToList()
             })
             .FirstOrDefaultAsync();

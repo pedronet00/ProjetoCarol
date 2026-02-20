@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using ProjetoCarol.Application.DTO.Usuario;
 using ProjetoCarol.Application.Interfaces;
 using ProjetoCarol.Application.ViewModel.Usuario;
 using ProjetoCarol.Domain.Entities.Usuario;
+using ProjetoCarol.Domain.Enums;
 using ProjetoCarol.Domain.Interfaces;
 using ProjetoCarol.Domain.Interfaces.Usuario;
 using ProjetoCarol.Domain.Notifications;
@@ -34,6 +36,31 @@ public class UsuarioPagamentoService : IUsuarioPagamentoService
 
         result.Result = _mapper.Map<UsuarioPagamentoViewModel>(createdEntity);
 
+        return result;
+    }
+
+    public async Task<DomainNotificationsResult<bool>> AlterarStatus(Guid id, StatusPagamento status)
+    {
+        var result = new DomainNotificationsResult<bool>();
+
+        if (id == Guid.Empty)
+        {
+            result.Notifications.Add("Id inválido.");
+            return result;
+        }
+
+        var pagamento = await _repo.EncontrarPeloId(id);
+
+        if (pagamento is null)
+        {
+            result.Notifications.Add("Pagamento não encontrado.");
+            return result;
+        }
+
+        pagamento.AlterarStatus(status);
+        await _uow.Commit();
+
+        result.Result = true;
         return result;
     }
 }

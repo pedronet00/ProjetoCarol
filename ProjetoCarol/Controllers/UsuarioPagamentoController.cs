@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjetoCarol.Application.DTO.Usuario;
 using ProjetoCarol.Application.Interfaces;
+using ProjetoCarol.Domain.Enums;
 
 namespace ProjetoCarol.Controllers;
 
@@ -22,6 +23,17 @@ public class UsuarioPagamentoController : ControllerBase
         var result = await _service.Criar(dto);
         if (result.HasNotifications)
             return BadRequest(result.Notifications);
+        return Ok(result.Result);
+    }
+
+    [HttpPatch("{id}/alterarStatus")]
+    public async Task<IActionResult> AlterarStatusPagamento(Guid id, StatusPagamento status)
+    {
+        var result = await _service.AlterarStatus(id, status);
+        if (result.HasNotifications)
+        {
+            return BadRequest(result.Notifications);
+        }
         return Ok(result.Result);
     }
 }
