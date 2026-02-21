@@ -27,12 +27,12 @@ public class ArquivoController : ControllerBase
 
 
     [HttpPost("upload")]
-    public async Task<IActionResult> Upload(IFormFile file, [FromForm] Idiomas idioma)
+    public async Task<IActionResult> Upload(IFormFile file, [FromForm] Idiomas idioma, [FromForm] int nivel)
     {
         if (file == null || file.Length == 0)
             return BadRequest("Arquivo inválido.");
 
-        var result = await _service.Upload(file, idioma);
+        var result = await _service.Upload(file, idioma, nivel);
 
         return Ok(result);
     }

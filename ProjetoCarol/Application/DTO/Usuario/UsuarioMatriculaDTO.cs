@@ -9,4 +9,6 @@ public class UsuarioMatriculaDTO
     public DateTime DataMatricula { get; set; }
 
     public Idiomas Idioma { get; set; }
+
+    public int NivelAluno { get; set; }
 }

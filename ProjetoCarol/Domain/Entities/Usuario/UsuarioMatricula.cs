@@ -13,17 +13,20 @@ public class UsuarioMatricula
 
     public Idiomas Idioma { get; set; }
 
+    public int NivelAluno { get; set; }
+
     #region Navigation Properties
     public ICollection<UsuarioAula> Aulas { get; set; } = new List<UsuarioAula>();
     #endregion
 
     private UsuarioMatricula() { }
 
-    public UsuarioMatricula(Guid usuarioId, DateTime dataMatricula, Idiomas idioma)
+    public UsuarioMatricula(Guid usuarioId, DateTime dataMatricula, Idiomas idioma, int nivelAluno)
     {
         Id = Guid.NewGuid();
         UsuarioId = usuarioId;
         DataMatricula = dataMatricula;
         Idioma = idioma;
+        NivelAluno = nivelAluno;
     }
 }

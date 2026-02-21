@@ -9,11 +9,13 @@ public class Arquivo
     public string NomeSalvo { get; private set; }
     public string Caminho { get; private set; }
     public Idiomas Idioma { get; private set; }
+
+    public int Nivel { get; private set; }
     public DateTime DataUpload { get; private set; }
 
     private Arquivo() { }
 
-    public Arquivo(string nomeOriginal, string nomeSalvo, string caminho, Idiomas idioma)
+    public Arquivo(string nomeOriginal, string nomeSalvo, string caminho, Idiomas idioma, int nivel)
     {
         Id = Guid.NewGuid();
         NomeOriginal = nomeOriginal;
@@ -21,5 +23,6 @@ public class Arquivo
         Caminho = caminho;
         Idioma = idioma;
         DataUpload = DateTime.UtcNow;
+        Nivel = nivel;
     }
 }

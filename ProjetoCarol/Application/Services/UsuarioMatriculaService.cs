@@ -40,7 +40,8 @@ public class UsuarioMatriculaService : IUsuarioMatriculaService
         var matricula = new UsuarioMatricula(
             dto.UsuarioId,
             dto.DataMatricula,
-            dto.Idioma);
+            dto.Idioma,
+            dto.NivelAluno);
 
         await _context.UsuarioMatricula.AddAsync(matricula);
         await _uow.Commit();
@@ -80,7 +81,8 @@ public class UsuarioMatriculaService : IUsuarioMatriculaService
                 UsuarioId = m.UsuarioId,
                 NomeCompleto = m.Usuario.NomeCompleto,
                 Idioma = m.Idioma,
-                DataMatricula = m.DataMatricula
+                DataMatricula = m.DataMatricula,
+                Nivel = m.NivelAluno
             })
             .ToListAsync();
         result.Result = matriculas;

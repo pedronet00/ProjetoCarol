@@ -8,5 +8,7 @@ public class ArquivoViewModel
     public string NomeOriginal { get; set; }
     public Idiomas Idioma { get; set; }
     public DateTime DataUpload { get; set; }
+
+    public int Nivel { get; set; }
 }
 

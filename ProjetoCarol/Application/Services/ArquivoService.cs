@@ -30,13 +30,14 @@ public class ArquivoService : IArquivoService
                 Id = a.Id,
                 NomeOriginal = a.NomeOriginal,
                 Idioma = a.Idioma,
-                DataUpload = a.DataUpload
+                DataUpload = a.DataUpload,
+                Nivel = a.Nivel
             })
             .ToListAsync();
     }
 
 
-    public async Task<ArquivoViewModel> Upload(IFormFile file, Idiomas idioma)
+    public async Task<ArquivoViewModel> Upload(IFormFile file, Idiomas idioma, int nivel)
     {
         var uploadsPath = Path.Combine(_env.ContentRootPath, "uploads");
 
@@ -55,7 +56,8 @@ public class ArquivoService : IArquivoService
             file.FileName,
             nomeSalvo,
             caminhoCompleto,
-            idioma
+            idioma,
+            nivel
         );
 
         _context.Arquivos.Add(arquivo);

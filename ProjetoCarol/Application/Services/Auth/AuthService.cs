@@ -41,14 +41,16 @@ public class AuthService : IAuthService
         {
             var matriculasResult = await _matriculaService.ListarPorUsuario(usuario.Id);
 
-            var idiomas = matriculasResult.Result?
-            .Select(x => x.Idioma.ToString())
-            .Distinct()
-            .ToList() ?? new List<string>();
+            var matriculasDict = matriculasResult.Result?
+                .GroupBy(x => x.Idioma)
+                .ToDictionary(
+                    g => g.Key.ToString().ToLower(),
+                    g => g.First().Nivel             
+                ) ?? new Dictionary<string, int>();
 
-            var idiomasJson = System.Text.Json.JsonSerializer.Serialize(idiomas);
+            var matriculasJson = System.Text.Json.JsonSerializer.Serialize(matriculasDict);
 
-            claims.Add(new Claim("matriculas", idiomasJson));
+            claims.Add(new Claim("matriculas", matriculasJson));
         }
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
