@@ -5,12 +5,12 @@ services:
     build: .
     container_name: projetocarol_api
     ports:
-      - "5000:8080"
+      - "5001:8080"
     depends_on:
       - sqlserver
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=ProjetoCarolDb;User Id=sa;Password=SuaSenhaForte123!;
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=ProjetoCarolDb;User Id=sa;Password=G7m!R9x@Q2v#L8t$Z4pK;Encrypt=True;TrustServerCertificate=True;
     volumes:
       - uploads_data:/app/uploads
 
@@ -19,7 +19,7 @@ services:
     container_name: projetocarol_sql
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=SuaSenhaForte123!
+      - SA_PASSWORD=G7m!R9x@Q2v#L8t$Z4pK
     ports:
       - "1433:1433"
     volumes:
