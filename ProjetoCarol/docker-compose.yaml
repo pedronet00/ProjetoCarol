@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   api:
     build: .
@@ -7,24 +5,26 @@ services:
     ports:
       - "5001:8080"
     depends_on:
-      - sqlserver
+      - mysql
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=ProjetoCarolDb;User Id=sa;Password=G7m!R9x@Q2v#L8t$Z4pK;Encrypt=True;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=mysql;Port=3306;Database=ProjetoCarolDb;User=root;Password=Senhaforte123!;
     volumes:
       - uploads_data:/app/uploads
 
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: projetocarol_sql
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=G7m!R9x@Q2v#L8t$Z4pK
+  mysql:
+    image: mysql:8.0
+    container_name: projetocarol_mysql
     ports:
-      - "1433:1433"
+      - "3307:3306"        # Porta MySQL mapeada para o host
+    environment:
+      MYSQL_ROOT_PASSWORD: root        # Senha do root
+      MYSQL_DATABASE: ProjetoCarolDb        # Banco inicial
+      # MYSQL_USER e MYSQL_PASSWORD removidos
+    command: --default-authentication-plugin=mysql_native_password
     volumes:
-      - sql_data:/var/opt/mssql
+      - mysql_data:/var/lib/mysql
 
 volumes:
-  sql_data:
+  mysql_data:
   uploads_data:
