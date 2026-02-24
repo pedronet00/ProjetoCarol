@@ -8,7 +8,7 @@ services:
       - mysql
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=mysql;Port=3306;Database=ProjetoCarolDb;User=root;Password=Senhaforte123!;
+      - ConnectionStrings__DefaultConnection=Server=mysql;Port=3306;Database=ProjetoCarolDb;User=root;Password=j$Y.Ca64MA5_3yRr|y*\0e;
     volumes:
       - uploads_data:/app/uploads
 
@@ -16,11 +16,10 @@ services:
     image: mysql:8.0
     container_name: projetocarol_mysql
     ports:
-      - "3307:3306"        # Porta MySQL mapeada para o host
+      - "3307:3306"        
     environment:
-      MYSQL_ROOT_PASSWORD: root        # Senha do root
-      MYSQL_DATABASE: ProjetoCarolDb        # Banco inicial
-      # MYSQL_USER e MYSQL_PASSWORD removidos
+      MYSQL_ROOT_PASSWORD: root        
+      MYSQL_DATABASE: ProjetoCarolDb        
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - mysql_data:/var/lib/mysql
