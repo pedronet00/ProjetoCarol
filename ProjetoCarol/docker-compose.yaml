@@ -8,7 +8,7 @@ services:
       - mysql
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=mysql;Port=3306;Database=ProjetoCarolDb;User=root;Password=JyaC64MA5_3yRr0e!;
+      - ConnectionStrings__DefaultConnection=Server=mysql;Port=3306;Database=ProjetoCarolDb;User=devuser;Password=JyaC64MA5_3yRr0e!;
     volumes:
       - uploads_data:/app/uploads
 
