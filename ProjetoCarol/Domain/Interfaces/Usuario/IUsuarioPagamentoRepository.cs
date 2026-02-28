@@ -7,4 +7,6 @@ public interface IUsuarioPagamentoRepository
     Task<UsuarioPagamento> Criar(UsuarioPagamento pagamento);
 
     Task<UsuarioPagamento> EncontrarPeloId(Guid? id);
+
+    Task<decimal> CalcularFaturamentoMesPassado();
 }

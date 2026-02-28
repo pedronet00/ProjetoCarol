@@ -24,6 +24,17 @@ public class UsuarioPagamentoService : IUsuarioPagamentoService
         _uow = uow;
     }
 
+    public async Task<DomainNotificationsResult<decimal>> CalcularFaturamentoMesPassado()
+    {
+        var result = new DomainNotificationsResult<decimal>();
+
+        var faturamento = await _repo.CalcularFaturamentoMesPassado();
+
+        result.Result = faturamento;
+
+        return result;
+    }
+
     public async Task<DomainNotificationsResult<UsuarioPagamentoViewModel>> Criar(UsuarioPagamentoDTO dto)
     {
         var result = new DomainNotificationsResult<UsuarioPagamentoViewModel>();

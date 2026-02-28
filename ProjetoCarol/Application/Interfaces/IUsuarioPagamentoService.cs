@@ -10,4 +10,6 @@ public interface IUsuarioPagamentoService
     Task<DomainNotificationsResult<UsuarioPagamentoViewModel>> Criar(UsuarioPagamentoDTO dto);
 
     Task<DomainNotificationsResult<bool>> AlterarStatus(Guid id, StatusPagamento status);
+
+    Task<DomainNotificationsResult<decimal>> CalcularFaturamentoMesPassado();
 }

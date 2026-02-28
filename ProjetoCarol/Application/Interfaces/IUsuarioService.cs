@@ -8,6 +8,8 @@ public interface IUsuarioService
 {
     Task<DomainNotificationsResult<UsuarioViewModel>> Criar(UsuarioDTO userDTO);
 
+    Task<DomainNotificationsResult<Dictionary<string, int>>> ContarAlunosAtivos();
+
     Task<DomainNotificationsResult<bool>> AlterarStatus(Guid id);
 
     Task<DomainNotificationsResult<UsuarioViewModel>> Atualizar(AtualizarUsuarioDTO dto);

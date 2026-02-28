@@ -41,7 +41,32 @@ public class UsuarioService : IUsuarioService
         return $"{primeiroNome}.{ultimoNome}@123";
     }
 
+    public async Task<DomainNotificationsResult<Dictionary<string, int>>> ContarAlunosAtivos()
+    {
+        var result = new DomainNotificationsResult<Dictionary<string, int>>();
 
+        Dictionary<string, int> myDictionary = new Dictionary<string, int>();
+
+        // Total de alunos ativos
+        var totalAlunosAtivos = await _userManager.Users
+            .CountAsync(u => u.TipoUsuario == Roles.Aluno && u.Ativo);
+
+        // Total de alunos ativos - inglês
+        var totalAlunosAtivosIngles = await _userManager.Users
+            .CountAsync(u => u.TipoUsuario == Roles.Aluno && u.Ativo && u.Matriculas.Any(m => m.Idioma == Idiomas.Ingles));
+
+        // Total de alunos ativoss - espanhol
+        var totalAlunosAtivosEspanhol = await _userManager.Users
+            .CountAsync(u => u.TipoUsuario == Roles.Aluno && u.Ativo && u.Matriculas.Any(m => m.Idioma == Idiomas.Espanhol));
+
+        myDictionary.Add("TotalAlunosAtivos", totalAlunosAtivos);
+        myDictionary.Add("TotalAlunosAtivosIngles", totalAlunosAtivosIngles);
+        myDictionary.Add("TotalAlunosAtivosEspanhol", totalAlunosAtivosEspanhol);
+
+        result.Result = myDictionary;
+
+        return result;
+    }
 
     public async Task<DomainNotificationsResult<UsuarioViewModel>> Criar(UsuarioDTO userDTO)
     {
