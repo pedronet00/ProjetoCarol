@@ -7,6 +7,8 @@ public class Usuario : IdentityUser<Guid>
 {
     public string? NomeCompleto { get; private set; }
 
+    public string? Cpf { get; private set; }
+
     public DateTime DataNascimento { get; private set; }
 
     public Roles TipoUsuario { get; set; }
@@ -22,13 +24,14 @@ public class Usuario : IdentityUser<Guid>
 
     private Usuario() { } 
 
-    public Usuario(string nomeCompleto, DateTime dataNascimento)
+    public Usuario(string nomeCompleto, DateTime dataNascimento, string? cpf)
     {
         Id = Guid.NewGuid();
         NomeCompleto = nomeCompleto;
         DataNascimento = dataNascimento;
         Ativo = true;
         SenhaTemporaria = true;
+        Cpf = cpf;
     }
 
     public void AlterarStatus()

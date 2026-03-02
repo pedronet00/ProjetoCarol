@@ -9,11 +9,13 @@ public class MappingProfile : Profile
     {
         CreateMap<UsuarioDTO, Usuario>()
             .ConstructUsing(dto =>
-                new Usuario(dto.FullName!, DateTime.Now))
+                new Usuario(dto.FullName!, DateTime.Now, dto.Cpf))
             .ForMember(dest => dest.UserName,
                 opt => opt.MapFrom(src => src.UserName ?? src.Email))
             .ForMember(dest => dest.Email,
                 opt => opt.MapFrom(src => src.Email))
+            .ForMember(dest => dest.Cpf,
+                opt => opt.MapFrom(src => src.Cpf))
             .ForMember(dest => dest.PhoneNumber,
                 opt => opt.MapFrom(src => src.PhoneNumber));
 

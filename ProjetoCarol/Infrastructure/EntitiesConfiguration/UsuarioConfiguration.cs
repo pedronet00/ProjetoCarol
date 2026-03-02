@@ -9,6 +9,10 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
         builder.Property(x => x.NomeCompleto)
             .HasMaxLength(150);
 
+        builder.Property(x => x.Cpf)
+            .HasMaxLength(11)
+            .IsRequired();
+
         builder.Property(x => x.DataNascimento)
             .IsRequired();
 

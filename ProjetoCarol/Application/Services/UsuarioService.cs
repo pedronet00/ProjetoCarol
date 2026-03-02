@@ -21,24 +21,16 @@ public class UsuarioService : IUsuarioService
         _mapper = mapper;
     }
 
-    string GerarSenhaTemporaria(string fullName)
+    string GerarSenhaTemporaria(string cpf)
     {
-        if (string.IsNullOrWhiteSpace(fullName))
-            throw new ArgumentException("Nome inválido para gerar senha.");
+        if (string.IsNullOrWhiteSpace(cpf))
+            throw new ArgumentException("CPF inválido para gerar senha.");
 
-        var partes = fullName
+        var senha = cpf
             .Trim()
-            .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            .Substring(0, 6);
 
-        var primeiroNome = partes.First().ToLower();
-        var ultimoNome = partes.Length > 1
-            ? partes.Last().ToLower()
-            : partes.First().ToLower();
-
-        // Primeira letra maiúscula
-        primeiroNome = char.ToUpper(primeiroNome[0]) + primeiroNome.Substring(1);
-
-        return $"{primeiroNome}.{ultimoNome}@123";
+        return senha;
     }
 
     public async Task<DomainNotificationsResult<Dictionary<string, int>>> ContarAlunosAtivos()
@@ -80,17 +72,21 @@ public class UsuarioService : IUsuarioService
             return result;
         }
 
-        var usuario = new Usuario(userDTO.FullName!, DateTime.Now)
+        var usuario = new Usuario(userDTO.FullName!, DateTime.Now, userDTO.Cpf)
         {
             UserName = userDTO.UserName ?? userDTO.Email,
             Email = userDTO.Email,
             PhoneNumber = userDTO.PhoneNumber,
-            TipoUsuario = Domain.Enums.Roles.Aluno,
+            TipoUsuario = Domain.Enums.Roles.Aluno
         };
 
-        var senhaTemporaria = GerarSenhaTemporaria(userDTO.FullName!);
+        var senhaTemporaria = GerarSenhaTemporaria(userDTO.Cpf!);
 
-        var createResult = await _userManager.CreateAsync(usuario, senhaTemporaria);
+        var hasher = new PasswordHasher<Usuario>();
+
+        usuario.PasswordHash = hasher.HashPassword(usuario, senhaTemporaria);
+
+        var createResult = await _userManager.CreateAsync(usuario);
 
         if (createResult != null)
         {

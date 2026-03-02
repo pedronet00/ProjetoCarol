@@ -7,6 +7,8 @@ public class UsuarioDTO
     public string? Id { get; set; }
     [Required]
     public string? FullName { get; set; }
+
+    public string? Cpf { get; set; }
     public string? UserName { get; set; }
 
     [Required]
