@@ -53,7 +53,8 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(
                 "http://localhost:5173",
                 "https://localhost:5173",
-                "https://carolsclass.com.br"
+                "https://carolsclass.com.br",
+                "https://www.carolsclass.com.br"
             )
             .AllowAnyHeader()
             .AllowAnyMethod()
