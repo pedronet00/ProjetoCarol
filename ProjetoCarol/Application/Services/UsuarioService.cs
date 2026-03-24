@@ -186,10 +186,11 @@ public class UsuarioService : IUsuarioService
                     NomeCompleto = u.NomeCompleto,
                     MatriculaId = m.Id,
                     Idioma = m.Idioma,
+                    Nivel = m.NivelAluno
                 })
             })
-    .ToListAsync();
-
+            .OrderBy(u => u.NomeCompleto)
+            .ToListAsync();
 
         result.Result = _mapper.Map<IEnumerable<UsuarioViewModel>>(alunos);
 
