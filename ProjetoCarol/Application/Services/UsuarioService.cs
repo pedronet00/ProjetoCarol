@@ -126,6 +126,7 @@ public class UsuarioService : IUsuarioService
                 Id = u.Id,
                 NomeCompleto = u.NomeCompleto,
                 Email = u.Email,
+                Cpf = u.Cpf,
                 NumeroTelefone = u.PhoneNumber,
                 DataNascimento = u.DataNascimento,
                 Status = u.Ativo,
