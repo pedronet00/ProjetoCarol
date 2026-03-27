@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using ProjetoCarol.Application.Interfaces;
 using ProjetoCarol.Application.ViewModel;
 
@@ -19,6 +20,7 @@ public class DashboardController : ControllerBase
     }
 
     [HttpGet]
+    [EnableRateLimiting("Fixed")]
     public async Task<DashboardViewModel> Dashboard()
     {
         var alunosAtivos = await _usuarioService.ContarAlunosAtivos();

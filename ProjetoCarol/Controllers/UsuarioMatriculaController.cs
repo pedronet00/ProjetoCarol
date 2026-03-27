@@ -6,11 +6,11 @@ namespace ProjetoCarol.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UsuarioMatricula : ControllerBase
+public class UsuarioMatriculaController : ControllerBase
 {
     private readonly IUsuarioMatriculaService _usuarioMatriculaService;
 
-    public UsuarioMatricula(IUsuarioMatriculaService usuarioMatriculaService)
+    public UsuarioMatriculaController(IUsuarioMatriculaService usuarioMatriculaService)
     {
         _usuarioMatriculaService = usuarioMatriculaService;
     }

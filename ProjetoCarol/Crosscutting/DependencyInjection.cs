@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ProjetoCarol.Application.BackgroundServices;
 using ProjetoCarol.Application.Interfaces;
 using ProjetoCarol.Application.Interfaces.Auth;
 using ProjetoCarol.Application.Services;
@@ -21,11 +22,17 @@ public static class DependencyInjection
         services.AddScoped<IUsuarioAulaService, UsuarioAulaService>();
         services.AddScoped<IUsuarioPagamentoService, UsuarioPagamentoService>();
         services.AddScoped<IArquivoService, ArquivoService>();
+        services.AddScoped<IMatriculaHorarioService, MatriculaHorarioService>();
+        services.AddScoped<RotinaService>();
+
 
         // Repositories
         services.AddScoped<IUsuarioMatriculaRepository, UsuarioMatriculaRepository>();
         services.AddScoped<IUsuarioAulaRepository, UsuarioAulaRepository>();
         services.AddScoped<IUsuarioPagamentoRepository, UsuarioPagamentoRepository>();
+        services.AddScoped<IMatriculaHorarioRepository, MatriculaHorarioRepository>();
+
+        services.AddHostedService<GerarAulasBackgroundService>();
 
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

@@ -17,6 +17,8 @@ public class UsuarioMatricula
 
     #region Navigation Properties
     public ICollection<UsuarioAula> Aulas { get; set; } = new List<UsuarioAula>();
+    public ICollection<MatriculaHorario> Horarios { get; private set; } = new List<MatriculaHorario>();
+
     #endregion
 
     private UsuarioMatricula() { }

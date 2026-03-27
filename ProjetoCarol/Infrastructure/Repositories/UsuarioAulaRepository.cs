@@ -34,6 +34,7 @@ public class UsuarioAulaRepository : IUsuarioAulaRepository
         return await _context.UsuarioAula
             .Include(x => x.UsuarioMatricula)
                 .ThenInclude(x => x.Usuario)
+                .OrderByDescending(x => x.DataAula)
             .ToListAsync();
     }
 }
