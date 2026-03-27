@@ -19,8 +19,8 @@ public class GerarAulasBackgroundService : BackgroundService
         {
             Console.WriteLine("GerarAulasBackgroundService executando: " + DateTime.Now);
             var agora = DateTime.Now;
-            // próxima execução: meia-noite do próximo dia
-            var proxExecucao = agora.Date.AddSeconds(5);
+            // execuções de hora em hora
+            var proxExecucao = agora.Date.AddHours(1);
             var espera = proxExecucao - agora;
             if (espera <= TimeSpan.Zero)
                 espera = TimeSpan.FromMinutes(1);
