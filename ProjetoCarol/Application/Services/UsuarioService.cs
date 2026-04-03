@@ -48,7 +48,11 @@ public class UsuarioService : IUsuarioService
             return result;
         }
 
-        GerarSenhaTemporaria(usuario.Cpf!);
+        var senhaTemporaria = GerarSenhaTemporaria(usuario.Cpf!);
+
+        var hasher = new PasswordHasher<Usuario>();
+
+        user.PasswordHash = hasher.HashPassword(user, senhaTemporaria);
 
         user.DefinirSenhaTemporaria(true);
 
