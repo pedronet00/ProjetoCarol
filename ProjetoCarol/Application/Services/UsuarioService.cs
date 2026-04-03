@@ -6,6 +6,7 @@ using ProjetoCarol.Application.Interfaces;
 using ProjetoCarol.Application.ViewModel.Usuario;
 using ProjetoCarol.Domain.Entities.Usuario;
 using ProjetoCarol.Domain.Enums;
+using ProjetoCarol.Domain.Interfaces;
 using ProjetoCarol.Domain.Notifications;
 
 namespace ProjetoCarol.Application.Services;
@@ -14,11 +15,13 @@ public class UsuarioService : IUsuarioService
 {
     private readonly UserManager<Usuario> _userManager;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _uow;
 
-    public UsuarioService(UserManager<Usuario> userManager, IMapper mapper)
+    public UsuarioService(UserManager<Usuario> userManager, IMapper mapper, IUnitOfWork uow)
     {
         _userManager = userManager;
         _mapper = mapper;
+        _uow = uow;
     }
 
     string GerarSenhaTemporaria(string cpf)
@@ -50,6 +53,8 @@ public class UsuarioService : IUsuarioService
         user.DefinirSenhaTemporaria(true);
 
         await _userManager.UpdateAsync(user);
+
+        await _uow.Commit();
 
         result.Result = true;
 
