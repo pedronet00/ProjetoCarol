@@ -86,7 +86,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services
-    .AddIdentity<Usuario, IdentityRole<Guid>>()
+    .AddIdentityCore<Usuario>()
+    .AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 

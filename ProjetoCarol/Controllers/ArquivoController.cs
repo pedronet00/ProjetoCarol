@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ProjetoCarol.Controllers;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoCarol.Application.Interfaces;
 using ProjetoCarol.Domain.Enums;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ArquivoController : ControllerBase
 {
     private readonly IArquivoService _service;

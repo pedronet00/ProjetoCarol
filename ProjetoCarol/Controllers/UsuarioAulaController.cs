@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoCarol.Application.DTO.Usuario;
 using ProjetoCarol.Application.Interfaces;
@@ -7,6 +8,7 @@ namespace ProjetoCarol.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class UsuarioAulaController : ControllerBase
 {
     private readonly IUsuarioAulaService _service;

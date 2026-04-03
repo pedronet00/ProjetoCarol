@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoCarol.Application.DTO.Usuario;
 using ProjetoCarol.Application.Interfaces;
@@ -7,6 +8,7 @@ namespace ProjetoCarol.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class UsuarioController : ControllerBase
 {
     private readonly IUsuarioService _userService;
@@ -65,6 +67,17 @@ public class UsuarioController : ControllerBase
     public async Task<IActionResult> AlterarStatusUsuario(Guid id)
     {
         var result = await _userService.AlterarStatus(id);
+        if (result.HasNotifications)
+        {
+            return BadRequest(result.Notifications);
+        }
+        return Ok(result.Result);
+    }
+
+    [HttpPost("redefinirSenha")]
+    public async Task<IActionResult> RedefinirSenha([FromBody] UsuarioDTO usuario)
+    {
+        var result = await _userService.RedefinirSenhaUsuario(usuario);
         if (result.HasNotifications)
         {
             return BadRequest(result.Notifications);

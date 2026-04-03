@@ -24,7 +24,7 @@ public class ArquivoService : IArquivoService
     {
         return await _context.Arquivos
             .Where(a => a.Idioma == idioma)
-            .OrderByDescending(a => a.DataUpload)
+            .OrderBy(a => a.DataUpload)
             .Select(a => new ArquivoViewModel
             {
                 Id = a.Id,

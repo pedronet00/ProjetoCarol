@@ -33,6 +33,29 @@ public class UsuarioService : IUsuarioService
         return senha;
     }
 
+    public async Task<DomainNotificationsResult<bool>> RedefinirSenhaUsuario(UsuarioDTO usuario)
+    {
+        var result = new DomainNotificationsResult<bool>();
+
+        var user = await _userManager.FindByEmailAsync(usuario.Email);
+
+        if(user is null)
+        {
+            result.Notifications.Add("Usuário não encontrado.");
+            return result;
+        }
+
+        GerarSenhaTemporaria(usuario.Cpf!);
+
+        user.DefinirSenhaTemporaria(true);
+
+        await _userManager.UpdateAsync(user);
+
+        result.Result = true;
+
+        return result;
+    }
+
     public async Task<DomainNotificationsResult<Dictionary<string, int>>> ContarAlunosAtivos()
     {
         var result = new DomainNotificationsResult<Dictionary<string, int>>();

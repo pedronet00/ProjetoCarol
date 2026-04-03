@@ -10,6 +10,8 @@ public interface IUsuarioService
 
     Task<DomainNotificationsResult<Dictionary<string, int>>> ContarAlunosAtivos();
 
+    Task<DomainNotificationsResult<bool>> RedefinirSenhaUsuario(UsuarioDTO usuario);
+
     Task<DomainNotificationsResult<bool>> AlterarStatus(Guid id);
 
     Task<DomainNotificationsResult<UsuarioViewModel>> Atualizar(AtualizarUsuarioDTO dto);

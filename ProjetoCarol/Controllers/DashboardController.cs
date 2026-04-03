@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using ProjetoCarol.Application.Interfaces;
@@ -8,6 +9,7 @@ namespace ProjetoCarol.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class DashboardController : ControllerBase
 {
     private readonly IUsuarioService _usuarioService;
