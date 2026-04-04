@@ -1,0 +1,34 @@
+﻿using ProjetoCarol.Domain.Enums;
+
+namespace ProjetoCarol.Domain.Entities.Usuario;
+
+public class UsuarioMatricula
+{
+    public Guid Id { get; private set; }
+
+    public Guid UsuarioId { get; set; }
+    public Usuario Usuario { get; set; } = null!;
+
+    public DateTime DataMatricula { get; set; }
+
+    public Idiomas Idioma { get; set; }
+
+    public int NivelAluno { get; set; }
+
+    #region Navigation Properties
+    public ICollection<UsuarioAula> Aulas { get; set; } = new List<UsuarioAula>();
+    public ICollection<MatriculaHorario> Horarios { get; private set; } = new List<MatriculaHorario>();
+
+    #endregion
+
+    private UsuarioMatricula() { }
+
+    public UsuarioMatricula(Guid usuarioId, DateTime dataMatricula, Idiomas idioma, int nivelAluno)
+    {
+        Id = Guid.NewGuid();
+        UsuarioId = usuarioId;
+        DataMatricula = dataMatricula;
+        Idioma = idioma;
+        NivelAluno = nivelAluno;
+    }
+}
