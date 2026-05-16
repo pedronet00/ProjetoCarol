@@ -4,26 +4,18 @@ services:
     container_name: projetocarol_api
     ports:
       - "5001:8080"
-    depends_on:
-      - mysql
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=mysql;Port=3306;Database=ProjetoCarolDb;User=devuser;Password=${DB_PASSWORD};
+      - ConnectionStrings__DefaultConnection=Server=mysql_shared;Port=3306;Database=ProjetoCarolDb;User=devuser;Password=${DB_PASSWORD};
       - JWT__Key=${JWT_KEY}
     volumes:
       - uploads_data:/app/uploads
+    networks:
+      - mysql_shared_net
 
-  mysql:
-    image: mysql:8.0
-    container_name: projetocarol_mysql
-    ports:
-      - "3307:3306"        
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}       
-      MYSQL_DATABASE: ProjetoCarolDb        
-    volumes:
-      - mysql_data:/var/lib/mysql
+networks:
+  mysql_shared_net:
+    external: true
 
 volumes:
-  mysql_data:
   uploads_data:
